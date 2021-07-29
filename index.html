@@ -1,88 +1,79 @@
 <!DOCTYPE html>
 <html lang="de">
-
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
-    <title>App Ideas</title>
-
-
-    
-</head>
-
-<body>
-    <div id="app">
-
-        <h2>{{title}}</h2>
-
-        <input type="text" v-model="note.Idea" placeholder = "App Name">
-        <br>
-        <textarea autofocus placeholder="Beschreibung" v-model="note.text"></textarea>
-        <br>
-        <button class="button" @click="addNote">Submit</button>
-        <br>
-        <div v-for="(note, index) in notes">
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="main.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+      <title>App Ideas</title>
+   </head>
+   <body>
+      <div id="app">
+         <h2>{{title}}</h2>
+         <input type="text" v-model="note.Idea" placeholder = "App Name">
+         <br>
+         <textarea autofocus placeholder="Beschreibung" v-model="note.text"></textarea>
+         <br>
+         <button class="button" @click="addNote">Submit</button>
+         <br>
+         <div v-for="(note, index) in notes">
             <div class ="top">
-                <!--<button class="close" @click="removeNote(index)"></button>-->
-                <i>{{note.date}}</i>
+               <!--<button class="close" @click="removeNote(index)"></button>-->
+               <i>{{note.date}}</i>
             </div>
             <h3>{{note.Idea}}</h3>
             <br>
             <p>{{note.text}}</p>
-        </div>
-    </div>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                title: 'App Ideas',
-                note: {
-                    Idea: '',
-                    text: '',
-                    date: ''
-                },
-                notes: [{
-                    text: 'App Ideas',
-                    Idea: '',
-                    date: new Date(Date.now()).toLocaleString()
-                }]
-            },
-            methods: {
-                addNote() {
-                    let {
-                        Idea,text,title
-                    } = this.note
-                    this.notes.push({
-                        Idea,
-                        text,
-                        date: new Date(Date.now()).toLocaleString(),
-                    })
-                    this.note.text = ''
-                },//Zum löschen der Einträge
-                //removeNote(index) {
-                  //  this.$delete(this.notes, index)
-                //},
-
-            },
-            //Client-Side Storage https://vuejs.org/v2/cookbook/client-side-storage.html
-            mounted() {
-                if (localStorage.getItem('notes')) this.notes = JSON.parse(localStorage.getItem('notes'));
-            },
-            watch: {
-                notes: {
-                    handler() {
-                        localStorage.setItem('notes', JSON.stringify(this.notes));
-                    },
-                    deep: true,
-                },
-            }
-        })
-        Vue.config.devtools = true
-    </script>
-</body>
-
+         </div>
+      </div>
+      <script>
+         var app = new Vue({
+             el: '#app',
+             data: {
+                 title: 'App Ideas',
+                 note: {
+                     Idea: '',
+                     text: '',
+                     date: ''
+                 },
+                 notes: [{
+                     text: 'App Ideas',
+                     Idea: '',
+                     date: new Date(Date.now()).toLocaleString()
+                 }]
+             },
+             methods: {
+                 addNote() {
+                     let {
+                         Idea,text,title
+                     } = this.note
+                     this.notes.push({
+                         Idea,
+                         text,
+                         date: new Date(Date.now()).toLocaleString(),
+                     })
+                     this.note.text = ''
+                 },//Zum löschen der Einträge
+                 //removeNote(index) {
+                   //  this.$delete(this.notes, index)
+                 //},
+         
+             },
+             //Client-Side Storage https://vuejs.org/v2/cookbook/client-side-storage.html
+             mounted() {
+                 if (localStorage.getItem('notes')) this.notes = JSON.parse(localStorage.getItem('notes'));
+             },
+             watch: {
+                 notes: {
+                     handler() {
+                         localStorage.setItem('notes', JSON.stringify(this.notes));
+                     },
+                     deep: true,
+                 },
+             }
+         })
+         Vue.config.devtools = true
+      </script>
+   </body>
 </html>
