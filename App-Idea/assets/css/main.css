@@ -188,8 +188,12 @@ a {
 	padding-left: 5px;
 }
 
-.disabled {
+.up {
 	color: orange!important;
+}
+
+.down {
+	color: #5693de!important;
 }
 
 

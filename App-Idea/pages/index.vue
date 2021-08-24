@@ -24,11 +24,11 @@
       <br>
       <p>{{ note.description }}</p>
       <li class="list-group-item">
-        <i class="fa fa-caret-up fa-2x symbol_color" aria-hidden="true" :class="{disabled: note.upvoted}" @click="upvote(index)" />
+        <i class="fa fa-caret-up fa-2x symbol_color" aria-hidden="true" :class="{up: note['user-vote'] === '+1'}" @click="upvote(index)" />
         <div class="vote_number">
           <span class="label label-primary">{{ note.vote }}</span>
         </div>
-        <i class="fa fa-caret-down fa-2x symbol_color" :class="{disabled: note.downvoted}" @click="downvote(index)" />
+        <i class="fa fa-caret-down fa-2x symbol_color" :class="{down: note['user-vote'] === '-1'}" @click="downvote(index)" />
       </li>
     </div>
     <br>
@@ -125,7 +125,10 @@ export default {
       this.note.name = ''
     },
     async getnotes () {
-      const res = await this.$axios.get('')
+      const res = await this.$axios.post('', {
+        'access-key': 'ACH788GHD',
+        'user-agent': 'navigator.userAgent'
+      })
       this.notes = res.data
     },
     async upvote (index) {
