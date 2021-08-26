@@ -282,3 +282,12 @@ a {
 	text-align: center;
 	width: 17px;
 }
+
+v-footer.footer {
+	display: flex;
+	justify-content: space-between;
+}
+.text_footer{
+	display:flex;
+	place-self: center;
+}

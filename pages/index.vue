@@ -34,6 +34,14 @@
       </li>
     </div>
     <br>
+    <v-footer padless class="footer">
+      <div class="text_footer">
+        <strong>© <!--{{ new Date().getFullYear()}}-->2021 wissensmarktplatz.com</strong>
+      </div>
+      <div>
+        <img src="../assets/images/CC-BY-NC.svg">
+      </div>
+    </v-footer>
   </div>
 </template>
 
