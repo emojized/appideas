@@ -24,11 +24,13 @@
       <br>
       <p>{{ note.description }}</p>
       <li class="list-group-item">
-        <i class="fa fa-caret-up fa-2x symbol_color" aria-hidden="true" :class="{up: note['user-vote'] === '+1'}" @click="upvote(index)" />
+        <i v-if="upvoted" class="fa fa-caret-up fa-2x symbol_color" aria-hidden="true" :class="{up: note['user-vote'] === '+1'}" @click="novote(index)" />
+        <i v-else class="fa fa-caret-up fa-2x symbol_color" aria-hidden="true" :class="{up: note['user-vote'] === '+1'}" @click="upvote(index)" />
         <div class="vote_number">
           <span class="label label-primary">{{ note.vote }}</span>
         </div>
-        <i class="fa fa-caret-down fa-2x symbol_color" :class="{down: note['user-vote'] === '-1'}" @click="downvote(index)" />
+        <i v-if="downvoted" class="fa fa-caret-down fa-2x symbol_color" :class="{down: note['user-vote'] === '-1'}" @click="novote(index)" />
+        <i v-else class="fa fa-caret-down fa-2x symbol_color" :class="{down: note['user-vote'] === '-1'}" @click="downvote(index)" />
       </li>
     </div>
     <br>
@@ -62,34 +64,8 @@ export default {
         vote: 0
       },
       notes: [{
-        upvoted: false,
-        downvoted: false,
         description: 'If you see this comment, something went wrong :(',
-        name: 'Something went wrong :(',
-        created_at: new Date(Date.now()).toLocaleString(),
-        vote: 3
-      },
-      {
-        upvoted: false,
-        downvoted: false,
-        description: 'If you see this comment, something went wrong :(',
-        name: 'Something went wrong :(',
-        created_at: new Date(Date.now()).toLocaleString(),
-        vote: 9
-      },
-      {
-        upvoted: false,
-        downvoted: false,
-        description: 'If you see this comment, something went wrong :(',
-        name: 'Something went wrong :(',
-        created_at: new Date(Date.now()).toLocaleString(),
-        vote: 3
-      },
-      {
-        upvoted: false,
-        downvoted: false,
-        description: '3 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        name: 'Beispiel 3',
+        name: 'Please try reloading the Page',
         created_at: new Date(Date.now()).toLocaleString(),
         vote: 3
       }
@@ -107,8 +83,8 @@ export default {
 
   mounted () {
     this.getnotes()
-    console.log(navigator)
   },
+
   methods: {
     async addNote () {
       const {
@@ -133,6 +109,8 @@ export default {
     },
     async upvote (index) {
       const note = this.notes[index]
+      this.upvoted = true
+      this.downvoted = false
       await this.$axios.post('', {
         id: note.id,
         vote: '+1',
@@ -143,9 +121,23 @@ export default {
     },
     async downvote (index) {
       const note = this.notes[index]
+      this.upvoted = false
+      this.downvoted = true
       await this.$axios.post('', {
         id: note.id,
         vote: '-1',
+        'access-key': 'ACH788GHD',
+        'user-agent': 'navigator.userAgent'
+      })
+      this.getnotes()
+    },
+    async novote (index) {
+      const note = this.notes[index]
+      this.upvoted = false
+      this.downvoted = false
+      await this.$axios.post('', {
+        id: note.id,
+        vote: '0',
         'access-key': 'ACH788GHD',
         'user-agent': 'navigator.userAgent'
       })
